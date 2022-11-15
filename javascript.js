@@ -39,7 +39,7 @@ function getNumber(number) {
     currentOperand.textContent += number;
 }
 function getOperator(eOperator) { //calls function on click on operator
-    operandA = currentOperand.textContent; // assigns current text to operandA. works
+    operandA = parseInt(currentOperand.textContent); // assigns current text to operandA. works
     currentOperator = eOperator; // assigns current operator as the pressed button
     currentOperand.textContent = ''; // clears current display
     previousOperand.textContent = operandA + `${currentOperator}`; // stores previous screen as the operandA + current operator  
@@ -47,7 +47,8 @@ function getOperator(eOperator) { //calls function on click on operator
 }
 
 function getResult(result){
-    operandB = currentOperand.textContent;
+    operandB = parseInt(currentOperand.textContent);
+    previousOperand.textContent = operandA + `${currentOperator}` + operandB + `=`; //update previous display
     result = operate(operandA, currentOperator, operandB);
     return result;
 }

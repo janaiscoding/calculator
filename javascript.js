@@ -2,19 +2,21 @@ const numberButtons = document.querySelectorAll(".number-btn");
 const operatorButtons = document.querySelectorAll(".operator-btn");
 const previousOperand = document.querySelector(".previous-operand");
 const currentOperand = document.querySelector(".current-operand");
-const equalsButton = document.querySelector(".equals-btn");
+const resultButton = document.querySelector(".equals-btn");
 const clearButton = document.querySelector(".clear-all-btn");
 const deleteButton = document.querySelector(".delete-btn");
 
+
 let operandA = '';
 let operandB = '';
-let currentOperator = '';
-
-equalsButton.onclick = () => operate(operandA, currentOperator, operandB); 
+let currentOperator;
+let finalResult = '';
 
 clearButton.onclick = () => clearAll(); // works
 
 deleteButton.onclick = () => deleteOne(); // works
+
+resultButton.onclick = () =>{ getResult()};
 
 numberButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -36,10 +38,19 @@ function deleteOne() {
 function getNumber(number) {
     currentOperand.textContent += number;
 }
-function getOperator(opera) {
-
+function getOperator(eOperator) { //calls function on click on operator
+    operandA = currentOperand.textContent; // assigns current text to operandA. works
+    currentOperator = eOperator; // assigns current operator as the pressed button
+    currentOperand.textContent = ''; // clears current display
+    previousOperand.textContent = operandA + `${currentOperator}`; // stores previous screen as the operandA + current operator  
+    // currentOperand.textContent = '';
 }
 
+function getResult(result){
+    operandB = currentOperand.textContent;
+    result = operate(operandA, currentOperator, operandB);
+    return result;
+}
 
 function clearAll() {
     operandA = 0;
@@ -66,18 +77,27 @@ function divide (a,b){
     return a/b;
 }
 
-function operate(a,operator,b){
-    if (operator === '+') {
-       return currentOperand.textContent = add(a,b);
+function operate(a,opera,b){
+    if (opera === '+') {
+      finalResult = add(a,b);
     }
-    else if (operator === '-') {
-        return currentOperand.textContent = subtract(a,b);
+    else if (opera === '-') {
+        finalResult = subtract(a,b);
     }
-    else if (operator === '*') {
-        return currentOperand.textContent = multiply(a,b);
+    else if (opera === '*') {
+        finalResult = multiply(a,b);
     }
-    else if (operator === '/' && b!= 0){
-        return currentOperand.textContent = divide(a,b);
+    else if (opera === '/' && b!= 0){
+        finalResult = divide(a,b);
     }
-    else return currentOperand.textContent = "You can't divide by 0";
+    else "You can't divide by 0";
+    currentOperand.textContent = finalResult;
+}
+
+//for checking data
+function showData() {
+console.log(operandA);
+console.log(operandB);
+console.log(currentOperator);
+console.log(finalResult); 
 }

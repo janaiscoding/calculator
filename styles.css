@@ -21,6 +21,7 @@ justify-content: space-between;
 padding: 20px 300px;
 background-color:rgba(216, 198, 198, 0.328);
 box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+margin-bottom: 200px
 }
 
 .links {
@@ -28,21 +29,51 @@ display: flex;
 justify-content: space-evenly;
 gap: 30px;
 }
-
+/*calculator/main side*/
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.calculator {
+  width: 400px;
+  border: 2px solid;
+  padding: 20px;
+  background-color: antiquewhite;
+}
+.all-buttons {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 20px;
+}
+.display {
+  padding: 10px 20px;
+  border: 1px solid;
+  text-align: right;
+  margin-bottom: 50px;
+  background-color: grey;
+}
+.history {
+  font-size: 25px;
+}
+.current {
+  font-size: 40px;
+}
     /* global styles */
 button {
-box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-outline: none;
-font-size: 14px;
+/* box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%); */
+font-size: 20px;
 font-weight: 500;
 height: 48px;
-max-width: 100%;
 line-height: normal;
-padding: 2px 24px;
-width: auto;
+padding: 30px;
+margin: 0px;
+display: flex;
+align-items: center;
+justify-content: center;
 }  
 
-input:hover{
+/* input:hover{
 cursor: pointer;
 transform: scale(1.05);  
 }
@@ -54,7 +85,7 @@ transform: scale(1.05);
           
 button.active {
 background-color: #95b37820;
-}
+} */
 
 ul {
 list-style: none;

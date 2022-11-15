@@ -11,7 +11,9 @@ margin: 0;
 body {
 padding: 0;
 margin: 0;
-background: linear-gradient(to right, rgb(202, 168, 174), rgb(180, 113, 113));
+min-height: 100vh;
+display: flex;
+flex-direction: column;
 }
 
    /* header side */
@@ -22,14 +24,20 @@ justify-content: space-between;
 padding: 20px 300px;
 background-color:rgba(216, 198, 198, 0.328);
 box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-color: white;
 font-size: 20px;
+}
+
+.title {
+  font-size: 24px;
+   color: #233611;
+   font-weight: bold;
 }
 
 .links {
 display: flex;
 justify-content: space-evenly;
 gap: 30px;
+color: #233611;
 } 
 /*calculator/main side*/
 
@@ -37,13 +45,18 @@ gap: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  background-color: rgba(240, 161, 161, 0.35);
+  padding: 0;
+  flex: 1;  
 }
 .calculator {
   width: 400px;
-  margin: 100px;
-  border: 2px solid;
+  height: auto;
+  /* margin: 100px; */
+  border: 1px solid;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(212, 147, 147, 0.35);
 }
 .buttons-wrapper {
   display: grid;
@@ -55,10 +68,10 @@ gap: 30px;
   cursor: pointer;
   font-size: 20px;
   font-weight:400;
-  height: 50px;
+  height: 80px;
   outline: none;
   box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid rgba(0, 0, 0, 0.282);
   background-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -72,7 +85,7 @@ button:hover {
 }
 
 .display {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(63, 48, 48, 0.7);
   grid-column: 1 / -1;
   display: flex;
   align-items: flex-end;
@@ -81,8 +94,10 @@ button:hover {
   padding: 10px;
   word-wrap: break-word;
   word-break: break-all;
-  height: 75px;
+  height: 100px;
+  text-align: right;
 }
+
 .display > .previous-operand {
   color: rgba(255, 255, 255, 0.7);
   font-size:1.5rem;
@@ -90,6 +105,27 @@ button:hover {
 .display > .current-operand {
   color: rgba(255, 255, 255);
   font-size: 2rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  padding: 20px 300px;
+  background-color:rgba(216, 198, 198, 0.328);
+}
+
+.fa-github {
+  color: #233611;
+  font-size: 25px;
+}
+.fa-github:hover {
+  cursor:pointer;
+  transform: scale(1.05); 
+}
+.footer-title {
+  color: #233611;
 }
     /* global styles */
         

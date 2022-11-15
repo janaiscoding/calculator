@@ -47,7 +47,7 @@ function getOperator(eOperator) { //calls function on click on operator
 }
 
 function getResult(result){
-    operandB = parseInt(currentOperand.textContent);
+    operandB = parseInt(currentOperand.textContent); 
     previousOperand.textContent = operandA + `${currentOperator}` + operandB + `=`; //update previous display
     result = operate(operandA, currentOperator, operandB);
     return result;

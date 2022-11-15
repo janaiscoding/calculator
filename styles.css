@@ -53,10 +53,10 @@ gap: 30px;
   margin-bottom: 50px;
   background-color: grey;
 }
-.history {
+.last-value {
   font-size: 25px;
 }
-.current {
+.current-value {
   font-size: 40px;
 }
     /* global styles */

@@ -81,12 +81,13 @@ button:hover {
   padding: 10px;
   word-wrap: break-word;
   word-break: break-all;
+  height: 75px;
 }
-.display > .last-value {
+.display > .previous-operand {
   color: rgba(255, 255, 255, 0.7);
   font-size:1.5rem;
 }
-.display > .current-value {
+.display > .current-operand {
   color: rgba(255, 255, 255);
   font-size: 2rem;
 }

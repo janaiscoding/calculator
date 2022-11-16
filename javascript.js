@@ -15,7 +15,10 @@ let operandA = '';
 let operandB = '';
 let operandC = '';
 let currentOperator = '';
-
+let operandANumber = parseFloat(operandA);
+let operandBNumber = parseFloat(operandB);
+let operandCNumber = parseFloat(operandC);
+let nextOperator = '';
 
 //on click event listeners
 clearButton.onclick = () => clearAll(); 
@@ -54,52 +57,47 @@ function getNumber(number) {
 
 //sets a, operator, updates display
 function getOperator(newOperator) { //calls function on click on operator
+    
     currentOperand.textContent === '' ?  operandA = 0 : operandA = currentOperand.textContent;
-    // fixes if nothing is inputed it makes a = 0 ;
     currentOperator = newOperator;
-    currentOperand.textContent = ''; // clears current display
-    previousOperand.textContent = operandA + `${currentOperator}`; // stores previous screen as the operandA + current operator  
-    // currentOperand.textContent = '';
+    currentOperand.textContent = '';
+    previousOperand.textContent = operandA + `${currentOperator}`;
+    
 }
-
 
 //sets b, runs operate function
 function getResult(result){
     currentOperand.textContent === '' ? operandB = 0 : operandB = currentOperand.textContent; 
-    // fixes if nothing is inputed it makes b = 0 ;
-
     previousOperand.textContent = operandA + `${currentOperator}` + operandB + `=`; //update previous display
-        //converts the operands from string to numbers
-        let operandANumber = parseFloat(operandA);
-        let operandBNumber = parseFloat(operandB);
-    if (operandANumber === 0 && operandBNumber === 0 || currentOperator === undefined ) {
-        previousOperand.textContent = '';
-        currentOperand.textContent = "ERROR, insert correct data"; 
-    }
-    else {
-        result = operate(operandANumber, currentOperator,operandBNumber);
-        return result;
-    }
+    //converts the operands from string to numbers
+    let operandANumber = parseFloat(operandA);
+    let operandBNumber = parseFloat(operandB);
+if (operandANumber === 0 && operandBNumber === 0 || currentOperator === undefined ) {
+    previousOperand.textContent = '';
+    currentOperand.textContent = "ERROR, insert correct data"; 
+}
+else {
+    result = operate(operandANumber, currentOperator,operandBNumber);
+    return result;
+}
 }
 
 //deletes all of it, resets everything
 function clearAll() {
     operandA = 0;
     operandB = 0;
+    operandC = 0;
     currentOperand.textContent = '';
     previousOperand.textContent = '';
-    tempResult = '';
     currentOperator = undefined;
-    nextOperator = undefined;
 }
 //function for getting the decimals input
 function getDecimal(){
-    if(currentOperand.textContent== '') return;
-    else if(currentOperand.textContent.includes('.')) return;
-    else {
-    currentOperand.textContent += '.';}
+    if (resetData) resetScreen();
+    if(currentOperand.textContent== '') currentOperand.textContent = '0';
+    if(currentOperand.textContent.includes('.')) return;
+    currentOperand.textContent += '.';
 }
-//refresh data
 
 // round number function 
  function roundNumber(number){
@@ -127,6 +125,7 @@ function divide (a,b){
 }
 
 function operate(a,opera,b){
+    let finalResult ='';
     if (opera === '+') {
       finalResult = add(a,b);
     }
@@ -142,7 +141,7 @@ function operate(a,opera,b){
     else if (b === 0) {
         return currentOperand.textContent = "ERROR";
     }
-    currentOperand.textContent = roundNumber(finalResult);
+    currentOperand.textContent = finalResult;
 
 }
 

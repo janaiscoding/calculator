@@ -1,24 +1,33 @@
-const numberButtons = document.querySelectorAll(".number-btn");
-const operatorButtons = document.querySelectorAll(".operator-btn");
+//display
 const previousOperand = document.querySelector(".previous-operand");
 const currentOperand = document.querySelector(".current-operand");
+
+//buttons
+const numberButtons = document.querySelectorAll(".number-btn");
+const operatorButtons = document.querySelectorAll(".operator-btn");
 const resultButton = document.querySelector(".equals-btn");
 const clearButton = document.querySelector(".clear-all-btn");
 const deleteButton = document.querySelector(".delete-btn");
 const decimalButton = document.getElementsByClassName(".decimal-btn");
 
+//initial values
 let operandA = '';
 let operandB = '';
 let currentOperator;
 let finalResult = '';
 
-clearButton.onclick = () => clearAll(); // works
-
-deleteButton.onclick = () => deleteOne(); // works
-
-resultButton.onclick = () => getResult(); //works
-
+//on click event listeners
+clearButton.onclick = () => clearAll(); 
+deleteButton.onclick = () => deleteOne(); 
+resultButton.onclick = () => getResult(); 
 decimalButton.onclick = () => getDecimal();
+
+//clicked numbers
+numberButtons.forEach((button) => {button.onclick = () => getNumber(button.textContent);}); 
+  
+//clicked operators
+operatorButtons.forEach((operator)=> {operator.onclick = () => getOperator(operator.textContent);});
+
 
 // document keypresses
 window.addEventListener('keydown', e => {
@@ -29,20 +38,6 @@ window.addEventListener('keydown', e => {
     if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') getOperator(e.key);
     if (e.key === '.') getDecimal();
   });
-
-//clicked numbers
-numberButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    getNumber(button.textContent);
-  });
-}); 
-
-//clicked operators
-operatorButtons.forEach((operator)=> {
-    operator.addEventListener('click', () =>{
-    getOperator(operator.textContent);
-    });
-});
 
 
 //deletes just one and updates display
@@ -96,6 +91,15 @@ function getDecimal(){
     currentOperand.textContent += '.';
 }
 
+// round number function 
+function roundNumber(number){
+    if (number.toString().indexOf('.' !== -1)){
+        if (number.toString().split('.')[1].length > 5){
+            return number.toFixed(2);
+        }
+    }
+    return number;
+}
 
 // All the math functions
 function add(a,b) {
@@ -130,13 +134,5 @@ function operate(a,opera,b){
     else if (b === 0) {
         return currentOperand.textContent = "ERROR";
     }
-    currentOperand.textContent = finalResult.toFixed(2); //support for only showing 2 decimals
-}
-
-//for checking data when unsure..
-function showData() {
-console.log(operandA);
-console.log(operandB);
-console.log(currentOperator);
-console.log(finalResult); 
+    currentOperand.textContent = roundNumber(finalResult);
 }

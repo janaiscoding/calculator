@@ -5,7 +5,7 @@ const currentOperand = document.querySelector(".current-operand");
 const resultButton = document.querySelector(".equals-btn");
 const clearButton = document.querySelector(".clear-all-btn");
 const deleteButton = document.querySelector(".delete-btn");
-
+const decimalButton = document.getElementsByClassName(".decimal-btn");
 
 let operandA = '';
 let operandB = '';
@@ -18,6 +18,8 @@ deleteButton.onclick = () => deleteOne(); // works
 
 resultButton.onclick = () => getResult(); //works
 
+decimalButton.onclick = () => getDecimal();
+
 // document keypresses
 window.addEventListener('keydown', e => {
     if (e.key >= 0 && e.key <= 9) getNumber(e.key);
@@ -25,6 +27,7 @@ window.addEventListener('keydown', e => {
     if (e.key === 'Backspace') deleteOne();
     if (e.key === 'Delete' || e.key === 'Escape') clearAll();
     if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') getOperator(e.key);
+    if (e.key === '.') getDecimal();
   });
 
 //clicked numbers
@@ -85,6 +88,13 @@ function clearAll() {
     currentOperand.textContent = '';
     previousOperand.textContent = '';
 }
+//function for getting the decimals input
+function getDecimal(){
+    if(currentOperand.textContent== ''){
+    currentOperand.textContent = '0';}
+    else if(currentOperand.textContent.includes('.')) return
+    currentOperand.textContent += '.';
+}
 
 
 // All the math functions
@@ -117,8 +127,10 @@ function operate(a,opera,b){
     else if (opera === '/' && b!= 0){
         finalResult = divide(a,b);
     }
-    else "You can't divide by 0";
-    currentOperand.textContent = finalResult;
+    else if (b === 0) {
+        return currentOperand.textContent = "ERROR";
+    }
+    currentOperand.textContent = finalResult.toFixed(2); //support for only showing 2 decimals
 }
 
 //for checking data when unsure..

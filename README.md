@@ -4,6 +4,5 @@ https://www.theodinproject.com/lessons/foundations-calculator
 
 
 current known problems: 
-- cant chain multiple operations
-- cant write with keypresses
+- if i get a result and continue keypressing, it adds the numbers onto the result 
 - decimals stuff 

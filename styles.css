@@ -113,21 +113,13 @@ button:hover {
 
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   font-size: 16px;
   padding: 20px 300px;
   background-color:rgba(216, 198, 198, 0.328);
 }
 
-.fa-github {
-  color: #233611;
-  font-size: 25px;
-}
-.fa-github:hover {
-  cursor:pointer;
-  transform: scale(1.05); 
-}
 .footer-title {
   color: #233611;
 }

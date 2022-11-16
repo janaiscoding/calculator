@@ -13,8 +13,9 @@ const decimalButton = document.getElementsByClassName(".decimal-btn");
 //initial values
 let operandA = '';
 let operandB = '';
-let currentOperator;
-let finalResult = '';
+let operandC = '';
+let currentOperator = '';
+
 
 //on click event listeners
 clearButton.onclick = () => clearAll(); 
@@ -31,7 +32,7 @@ operatorButtons.forEach((operator)=> {operator.onclick = () => getOperator(opera
 
 // document keypresses
 window.addEventListener('keydown', e => {
-    if (e.key >= 0 && e.key <= 9) getNumber(e.key);
+    if (e.key >= 0 && e.key <= 9) getNumber(e.key); 
     if (e.key === '=' || e.key === 'Enter') getResult();
     if (e.key === 'Backspace') deleteOne();
     if (e.key === 'Delete' || e.key === 'Escape') clearAll();
@@ -52,28 +53,33 @@ function getNumber(number) {
 }
 
 //sets a, operator, updates display
-function getOperator(eOperator) { //calls function on click on operator
-    if (currentOperand.textContent === '') {
-        operandA = 0;
-    } //fixes if nothing is inputed it makes a = 0 ;
-    else {
-        operandA = parseInt(currentOperand.textContent); }// assigns current text to operandA. works
-    currentOperator = eOperator; // assigns current operator as the pressed button
+function getOperator(newOperator) { //calls function on click on operator
+    currentOperand.textContent === '' ?  operandA = 0 : operandA = currentOperand.textContent;
+    // fixes if nothing is inputed it makes a = 0 ;
+    currentOperator = newOperator;
     currentOperand.textContent = ''; // clears current display
     previousOperand.textContent = operandA + `${currentOperator}`; // stores previous screen as the operandA + current operator  
     // currentOperand.textContent = '';
 }
 
+
 //sets b, runs operate function
 function getResult(result){
-    if (currentOperand.textContent === '') {
-        operandB = 0;
-    } //fixes if nothing is inputed it makes b = 0 ;
-    else {
-    operandB = parseInt(currentOperand.textContent); } // assigns current text to operandB. works
+    currentOperand.textContent === '' ? operandB = 0 : operandB = currentOperand.textContent; 
+    // fixes if nothing is inputed it makes b = 0 ;
+
     previousOperand.textContent = operandA + `${currentOperator}` + operandB + `=`; //update previous display
-    result = operate(operandA, currentOperator, operandB);
-    return result;
+        //converts the operands from string to numbers
+        let operandANumber = parseFloat(operandA);
+        let operandBNumber = parseFloat(operandB);
+    if (operandANumber === 0 && operandBNumber === 0 || currentOperator === undefined ) {
+        previousOperand.textContent = '';
+        currentOperand.textContent = "ERROR, insert correct data"; 
+    }
+    else {
+        result = operate(operandANumber, currentOperator,operandBNumber);
+        return result;
+    }
 }
 
 //deletes all of it, resets everything
@@ -82,22 +88,24 @@ function clearAll() {
     operandB = 0;
     currentOperand.textContent = '';
     previousOperand.textContent = '';
+    tempResult = '';
+    currentOperator = undefined;
+    nextOperator = undefined;
 }
 //function for getting the decimals input
 function getDecimal(){
-    if(currentOperand.textContent== ''){
-    currentOperand.textContent = '0';}
-    else if(currentOperand.textContent.includes('.')) return
-    currentOperand.textContent += '.';
+    if(currentOperand.textContent== '') return;
+    else if(currentOperand.textContent.includes('.')) return;
+    else {
+    currentOperand.textContent += '.';}
 }
+//refresh data
 
 // round number function 
-function roundNumber(number){
+ function roundNumber(number){
     if (number.toString().indexOf('.' !== -1)){
-        if (number.toString().split('.')[1].length > 5){
-            return number.toFixed(2);
-        }
-    }
+           return number.toFixed(2);
+  }
     return number;
 }
 
@@ -135,4 +143,15 @@ function operate(a,opera,b){
         return currentOperand.textContent = "ERROR";
     }
     currentOperand.textContent = roundNumber(finalResult);
+
 }
+
+function checkData(){
+    console.log(operandA);
+    console.log(operandB);
+    console.log(operandC);
+    console.log(currentOperator);
+}
+   
+
+

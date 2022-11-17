@@ -102,11 +102,11 @@ button:hover {
   text-align: right;
 }
 
-.display > .previous-operand {
+.display > .previous-screen {
   color: rgba(255, 255, 255, 0.7);
   font-size:1.5rem;
 }
-.display > .current-operand {
+.display > .current-screen {
   color: rgba(255, 255, 255);
   font-size: 2rem;
 }

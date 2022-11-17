@@ -1,156 +1,128 @@
-//display
-const previousOperand = document.querySelector(".previous-operand");
-const currentOperand = document.querySelector(".current-operand");
+let numA = ''
+let numB = ''
+let currentOperator = null
+let shouldResetScreen = false
 
-//buttons
-const numberButtons = document.querySelectorAll(".number-btn");
-const operatorButtons = document.querySelectorAll(".operator-btn");
-const resultButton = document.querySelector(".equals-btn");
-const clearButton = document.querySelector(".clear-all-btn");
-const deleteButton = document.querySelector(".delete-btn");
-const decimalButton = document.getElementsByClassName(".decimal-btn");
+const numBtns = document.querySelectorAll('.number-btn');
+const opBtns = document.querySelectorAll('.operator-btn');
+const equalsBtn = document.querySelector('.equals-btn');
+const clearBtn = document.querySelector('.clear-all-btn');
+const delBtn = document.querySelector('.delete-btn');
+const deciBtn = document.querySelector('.decimal');
+const previousScreen = document.querySelector('.previous-screen');
+const currentScreen = document.querySelector('.current-screen');
 
-//initial values
-let operandA = '';
-let operandB = '';
-let operandC = '';
-let currentOperator = '';
-let operandANumber = parseFloat(operandA);
-let operandBNumber = parseFloat(operandB);
-let operandCNumber = parseFloat(operandC);
-let nextOperator = '';
+//keypresses support
+window.addEventListener('keydown', e => {
+    if (e.key >= 0 && e.key <= 9) getNumber(e.key);
+    if (e.key === '.') getDecimal();
+    if (e.key === '=' || e.key === 'Enter') evaluate();
+    if (e.key === 'Backspace') deleteOne();
+    if (e.key === 'Escape') clear();
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') getOperator(e.key);
+      
+});
 
 //on click event listeners
-clearButton.onclick = () => clearAll(); 
-deleteButton.onclick = () => deleteOne(); 
-resultButton.onclick = () => getResult(); 
-decimalButton.onclick = () => getDecimal();
+equalsBtn.onclick = () => evaluate();
+clearBtn.onclick = () => clear();
+delBtn.onclick = () => deleteOne();
+deciBtn.onclick = () => getDecimal();
 
 //clicked numbers
-numberButtons.forEach((button) => {button.onclick = () => getNumber(button.textContent);}); 
-  
+numBtns.forEach((e) => {e.onclick = () => getNumber(e.textContent);});
+
 //clicked operators
-operatorButtons.forEach((operator)=> {operator.onclick = () => getOperator(operator.textContent);});
+opBtns.forEach((e) => {e.onclick = () => getOperator(e.textContent);});
 
-
-// document keypresses
-window.addEventListener('keydown', e => {
-    if (e.key >= 0 && e.key <= 9) getNumber(e.key); 
-    if (e.key === '=' || e.key === 'Enter') getResult();
-    if (e.key === 'Backspace') deleteOne();
-    if (e.key === 'Delete' || e.key === 'Escape') clearAll();
-    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') getOperator(e.key);
-    if (e.key === '.') getDecimal();
-  });
-
-
-//deletes just one and updates display
-function deleteOne() {
-    let deletedOutput = currentOperand.textContent.slice(0, -1);
-    currentOperand.textContent = deletedOutput;
-}
-
-//stores current numbers on display
 function getNumber(number) {
-    currentOperand.textContent += number;
+  if (currentScreen.textContent === '0' || shouldResetScreen)
+    resetScreen();
+  currentScreen.textContent += number;
 }
 
-//sets a, operator, updates display
-function getOperator(newOperator) { //calls function on click on operator
-    
-    currentOperand.textContent === '' ?  operandA = 0 : operandA = currentOperand.textContent;
-    currentOperator = newOperator;
-    currentOperand.textContent = '';
-    previousOperand.textContent = operandA + `${currentOperator}`;
-    
+function resetScreen() {
+  currentScreen.textContent = '';
+  shouldResetScreen = false;
 }
 
-//sets b, runs operate function
-function getResult(result){
-    currentOperand.textContent === '' ? operandB = 0 : operandB = currentOperand.textContent; 
-    previousOperand.textContent = operandA + `${currentOperator}` + operandB + `=`; //update previous display
-    //converts the operands from string to numbers
-    let operandANumber = parseFloat(operandA);
-    let operandBNumber = parseFloat(operandB);
-if (operandANumber === 0 && operandBNumber === 0 || currentOperator === undefined ) {
-    previousOperand.textContent = '';
-    currentOperand.textContent = "ERROR, insert correct data"; 
-}
-else {
-    result = operate(operandANumber, currentOperator,operandBNumber);
-    return result;
-}
+function clear() {
+  currentScreen.textContent = '0';
+  previousScreen.textContent = '';
+  numA = '';
+  numB = '';
+  currentOperator = null;
 }
 
-//deletes all of it, resets everything
-function clearAll() {
-    operandA = 0;
-    operandB = 0;
-    operandC = 0;
-    currentOperand.textContent = '';
-    previousOperand.textContent = '';
-    currentOperator = undefined;
-}
-//function for getting the decimals input
-function getDecimal(){
-    if (resetData) resetScreen();
-    if(currentOperand.textContent== '') currentOperand.textContent = '0';
-    if(currentOperand.textContent.includes('.')) return;
-    currentOperand.textContent += '.';
+function getDecimal() {
+  if (shouldResetScreen) resetScreen();
+  if (currentScreen.textContent === '')
+    currentScreen.textContent = '0';
+  if (currentScreen.textContent.includes('.')) return;
+  currentScreen.textContent += '.'
 }
 
-// round number function 
- function roundNumber(number){
-    if (number.toString().indexOf('.' !== -1)){
-           return number.toFixed(2);
+function deleteOne() {
+    let deletedOutput = currentScreen.textContent.slice(0, -1);
+    currentScreen.textContent = deletedOutput;
+}
+
+function getOperator(operator) {
+  if (currentOperator !== null) evaluate();
+  numA = currentScreen.textContent;
+  currentOperator = operator;
+  previousScreen.textContent = `${numA} ${currentOperator}`;
+  shouldResetScreen = true;
+}
+
+function evaluate() {
+  if (currentOperator === null || shouldResetScreen) return
+  if (currentOperator === '/' && currentScreen.textContent === '0') {
+    currentScreen.textContent ="You can't divide by 0!";
+    return
   }
-    return number;
+  numB = currentScreen.textContent
+  currentScreen.textContent = roundResult(
+    operate(currentOperator, numA, numB)
+  )
+  previousScreen.textContent = `${numA} ${currentOperator} ${numB} =`
+  currentOperator = null
 }
 
-// All the math functions
-function add(a,b) {
-    return a + b;
+function roundResult(number) {
+  return Math.round(number * 1000) / 1000
 }
 
-function subtract(a,b){
-    return a - b;
+function add(a, b) {
+  return a + b
 }
 
-function multiply(a,b){
-    return a * b;
+function substract(a, b) {
+  return a - b
 }
 
-function divide (a,b){
-    return a/b;
+function multiply(a, b) {
+  return a * b
 }
 
-function operate(a,opera,b){
-    let finalResult ='';
-    if (opera === '+') {
-      finalResult = add(a,b);
-    }
-    else if (opera === '-') {
-        finalResult = subtract(a,b);
-    }
-    else if (opera === '*') {
-        finalResult = multiply(a,b);
-    }
-    else if (opera === '/' && b!= 0){
-        finalResult = divide(a,b);
-    }
-    else if (b === 0) {
-        return currentOperand.textContent = "ERROR";
-    }
-    currentOperand.textContent = finalResult;
-
+function divide(a, b) {
+  return a / b
 }
 
-function checkData(){
-    console.log(operandA);
-    console.log(operandB);
-    console.log(operandC);
-    console.log(currentOperator);
+function operate(operator, a, b) {
+  a = Number(a);
+  b = Number(b);
+  switch (operator) {
+    case '+':
+      return add(a, b)
+    case '-':
+      return substract(a, b)
+    case '*':
+      return multiply(a, b)
+    case '/':
+      if (b === 0) return null
+      else return divide(a, b)
+    default:
+      return null
+  }
 }
-   
-
-

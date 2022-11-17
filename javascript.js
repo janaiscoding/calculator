@@ -35,6 +35,7 @@ numBtns.forEach((e) => {e.onclick = () => getNumber(e.textContent);});
 //clicked operators
 opBtns.forEach((e) => {e.onclick = () => getOperator(e.textContent);});
 
+
 function getNumber(number) {
   if (currentScreen.textContent === '0' || shouldResetScreen)
     resetScreen();

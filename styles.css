@@ -24,7 +24,6 @@ justify-content: space-between;
 padding: 20px 300px;
 background-color:rgba(216, 198, 198, 0.328);
 box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-font-size: 20px;
 }
 
 .title {
@@ -35,10 +34,20 @@ font-size: 20px;
 
 .links {
 display: flex;
+align-items: center;
 justify-content: space-evenly;
 gap: 30px;
-color: #233611;
 } 
+.links-member,
+.footer-title {
+  color:#233611;
+  font-weight: bold;
+}
+.links-member:hover,
+.title:hover,
+.footer-title:hover {
+  transform: scale(1.03);
+}
 /*calculator/main side*/
 
 .main {
@@ -118,10 +127,6 @@ button:hover {
   font-size: 16px;
   padding: 20px 300px;
   background-color:rgba(216, 198, 198, 0.328);
-}
-
-.footer-title {
-  color: #233611;
 }
     /* global styles */
         

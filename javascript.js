@@ -90,6 +90,8 @@ function evaluate() {
   currentOperator = null
 }
 
+
+// basic math stuff
 function roundResult(number) {
   return Math.round(number * 1000) / 1000
 }
@@ -109,6 +111,7 @@ function multiply(a, b) {
 function divide(a, b) {
   return a / b
 }
+
 
 function operate(operator, a, b) {
   a = Number(a);
